@@ -7,11 +7,11 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 const editions = [
   {
     year: '2025',
-    images: Array.from({ length: 6 }, (_, i) => `/images/ed2025${i + 1}.jpg`),
+    images: Array.from({ length: 4 }, (_, i) => `/images/ed2025${i + 1}.jpg`),
   },
   {
     year: '2026',
-    images: Array.from({ length: 6 }, (_, i) => `/images/ed2026${i + 1}.jpg`),
+    images: Array.from({ length: 4 }, (_, i) => `/images/ed2026${i + 1}.jpg`),
   },
 ];
 
@@ -23,7 +23,6 @@ export default function GalleryEditions() {
   const allImages = currentEdition.images;
   const totalImages = allImages.length;
 
-  // Navigation clavier
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (lightboxIndex === null) return;
@@ -46,7 +45,6 @@ export default function GalleryEditions() {
     setLightboxIndex((prev) => (prev === totalImages - 1 ? 0 : prev! + 1));
   }, [totalImages]);
 
-  // Geste tactile simple pour le swipe
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const handleTouchStart = (e: React.TouchEvent) => setTouchStart(e.touches[0].clientX);
   const handleTouchEnd = (e: React.TouchEvent) => {
@@ -65,7 +63,6 @@ export default function GalleryEditions() {
         Souvenirs des <span className="text-gradient-gold">éditions</span>
       </h2>
 
-      {/* Filtres années */}
       <div className="flex justify-center gap-4 mb-12">
         {editions.map((edition) => (
           <button
@@ -82,24 +79,26 @@ export default function GalleryEditions() {
         ))}
       </div>
 
-      {/* Grille d'images */}
+      {/* Grille d'images – retour au remplissage complet */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {allImages.map((src, index) => (
           <div
             key={index}
             onClick={() => openLightbox(index)}
             className="relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 group cursor-pointer transition-all duration-500 hover:border-gold-500/30 hover:shadow-xl hover:shadow-gold-500/10"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Enter' && openLightbox(index)}
           >
             <div className="aspect-[4/3] relative">
               <Image
                 src={src}
-                alt={`Souvenir ${activeYear} - photo ${index + 1}`}
+                alt={`Souvenir ${activeYear} - ${index + 1}`}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                unoptimized // car vos images sont déjà compressées
+                quality={90}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-legal-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           </div>
         ))}
@@ -111,20 +110,21 @@ export default function GalleryEditions() {
           <button
             onClick={closeLightbox}
             className="absolute top-4 right-4 text-white/70 hover:text-white z-10"
+            aria-label="Fermer"
           >
             <X className="w-8 h-8" />
           </button>
-
           <button
             onClick={prevImage}
             className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white z-10 p-2"
+            aria-label="Précédent"
           >
             <ChevronLeft className="w-10 h-10" />
           </button>
-
           <button
             onClick={nextImage}
             className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white z-10 p-2"
+            aria-label="Suivant"
           >
             <ChevronRight className="w-10 h-10" />
           </button>
@@ -142,8 +142,6 @@ export default function GalleryEditions() {
               unoptimized
             />
           </div>
-
-          {/* Compteur */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/50 text-sm">
             {lightboxIndex + 1} / {totalImages}
           </div>
