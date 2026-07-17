@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
-import { MapPin, Mail, Phone, Globe, Tag, ArrowLeft } from 'lucide-react';
+import { MapPin, Mail, Phone, Globe, Tag, ArrowLeft, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 
+// Base de démonstration (quelques cabinets réels)
 const cabinetsData: Record<string, any> = {
   kouassi: {
     nom: 'Cabinet KOUASSI & Associés',
@@ -23,51 +24,27 @@ const cabinetsData: Record<string, any> = {
     telephone: '+228 90 00 00 00',
     site: 'www.adotevi.tg',
   },
-  mensah: {
-    nom: 'SCP MENSAH & Partners',
-    specialites: ['Droit OHADA'],
-    ville: 'Abidjan',
-    pays: 'Côte d’Ivoire',
-    adresse: 'Plateau, Immeuble SIB',
-    email: 'contact@mensah.ci',
-    telephone: '+225 01 00 00 00',
-    site: 'www.mensah.ci',
-  },
-  diallo: {
-    nom: 'Cabinet DIALLO Conseil',
-    specialites: ['Droit Commercial'],
-    ville: 'Dakar',
-    pays: 'Sénégal',
-    adresse: 'Avenue Cheikh Anta Diop',
-    email: 'diallo@conseil.sn',
-    telephone: '+221 77 00 00 00',
-    site: 'www.dialloconseil.sn',
-  },
-  boko: {
-    nom: 'Etude BOKO & Frères',
-    specialites: ['Droit Pénal'],
-    ville: 'Cotonou',
-    pays: 'Bénin',
-    adresse: 'Rue 210, Ganhi',
-    email: 'boko@etude.bj',
-    telephone: '+229 96 00 00 00',
-    site: 'www.boko.bj',
-  },
-  ekue: {
-    nom: 'Cabinet EKUE',
-    specialites: ['Sécurité Sociale'],
-    ville: 'Lomé',
-    pays: 'Togo',
-    adresse: 'Avenue de la Libération',
-    email: 'ekue@cabinet.tg',
-    telephone: '+228 91 00 00 00',
-    site: 'www.ekue.tg',
-  },
+  // Ajoutez d'autres vrais cabinets si vous voulez
 };
 
+// Génération d'un profil simulé pour tout ID inconnu
+function getSimulatedProfile(id: string) {
+  return {
+    nom: `Cabinet ${id.toUpperCase()}`,
+    specialites: ['Droit des Affaires', 'Fiscalité'],
+    ville: 'Cotonou',
+    pays: 'Bénin',
+    adresse: 'Immeuble DCMP Network, Boulevard de la Marina',
+    email: `contact@${id}.bj`,
+    telephone: '+229 00 00 00 00',
+    site: `www.${id}.bj`,
+    isSimulated: true,
+  };
+}
+
 export default function CabinetProfile({ params }: { params: { id: string } }) {
-  const cabinet = cabinetsData[params.id];
-  if (!cabinet) notFound();
+  // Cherche d'abord dans les vrais cabinets, sinon crée un simulé
+  const cabinet = cabinetsData[params.id] || getSimulatedProfile(params.id);
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-20">
@@ -75,7 +52,21 @@ export default function CabinetProfile({ params }: { params: { id: string } }) {
         <Link href="/cabinets" className="inline-flex items-center gap-2 text-[#0A50C9] hover:underline mb-6 text-sm">
           <ArrowLeft className="w-4 h-4" /> Retour à la liste
         </Link>
+
         <div className="bg-white border border-[#E2E8F0] rounded-2xl p-8 shadow-sm">
+          {/* Bandeau simulation si nécessaire */}
+          {cabinet.isSimulated && (
+            <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
+              <AlertCircle className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" />
+              <div>
+                <p className="font-semibold text-amber-800">Profil simulé</p>
+                <p className="text-sm text-amber-700">
+                  La plateforme DCMP Network est actuellement en phase de test. Les informations affichées sont fictives et servent de démonstration.
+                </p>
+              </div>
+            </div>
+          )}
+
           <div className="flex items-center gap-4 mb-6">
             <div className="w-16 h-16 bg-[#0A50C9] text-white rounded-full flex items-center justify-center text-2xl font-bold">
               {cabinet.nom.charAt(0)}
