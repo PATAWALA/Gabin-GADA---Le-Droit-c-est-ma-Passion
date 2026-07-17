@@ -1,21 +1,15 @@
-import Hero from '@/components/Hero';
-import Pillars from '@/components/Pillars';
-import AboutFounder from '@/components/AboutFounder';
-import BentoGrid from '@/components/BentoGrid';
-import Gallery from '@/components/Gallery';
-import GalleryHomeCarousel from '@/components/GalleryHomeCarousel';  // nouveau
-import Partners from '@/components/Partners';
+import HeroSection from '@/components/sections/HeroSection';
+import SynergySection from '@/components/sections/SynergySection';
+import CabinetsGrid from '@/components/sections/CabinetsGrid';
+import GalleryEditions from '@/components/sections/GalleryEditions';
 
 export default function Home() {
   return (
     <>
-      <Hero />
-      <Pillars />
-      <AboutFounder />
-      <GalleryHomeCarousel />  {/* section mobile-first */}
-      <BentoGrid />
-      <Gallery />
-      <Partners />
+      <HeroSection />
+      <SynergySection />
+      <CabinetsGrid />
+      <GalleryEditions />
     </>
   );
 }

@@ -1,112 +1,69 @@
-import { Metadata } from 'next';
-import { Calendar, MapPin, Mic, Users, Award } from 'lucide-react';
-import WaitlistForm from '@/components/waitlist/WaitlistForm';
-import GalleryEditions from '@/components/GalleryEditions';
+'use client';
 
-export const metadata: Metadata = {
-  title: 'Benin Legal Summit 2027 | Gabin GADA',
-  description:
-    'Inscrivez-vous sur liste d’attente pour la prochaine édition du Benin Legal Summit. Revivez les moments des éditions précédentes.',
-};
-
-// Données des moments forts (texte)
-const editions = [
-  {
-    icon: Mic,
-    title: 'Conférence inaugurale',
-    description:
-      '« Le droit face aux défis numériques en Afrique » par Gabin GADA, devant 500 participants.',
-    date: 'Édition 2024',
-  },
-  {
-    icon: Users,
-    title: 'Panel international',
-    description:
-      'Échanges entre magistrats, avocats et universitaires venus de 12 pays africains.',
-    date: 'Édition 2024',
-  },
-  {
-    icon: Award,
-    title: 'Prix de l’Excellence Juridique',
-    description: 'Récompense des acteurs majeurs du droit béninois.',
-    date: 'Édition 2023',
-  },
-  {
-    icon: MapPin,
-    title: 'Atelier OHADA',
-    description: 'Rédaction de contrats et contentieux des affaires.',
-    date: 'Édition 2023',
-  },
-  {
-    icon: Calendar,
-    title: 'Soirée de Gala',
-    description: 'Networking de prestige au Palais de la Marina.',
-    date: 'Édition 2022',
-  },
-];
+import { useState } from 'react';
+import { Calendar, MapPin, Send, CheckCircle } from 'lucide-react';
 
 export default function SommetPage() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setStatus('success');
+  };
+
   return (
-    <main className="min-h-screen pt-24 pb-16 bg-legal-950">
-      {/* Hero du Summit */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(229,172,47,0.1),transparent_60%)]" />
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-12 py-20 text-center">
-          <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6">
-            Benin Legal <span className="text-gradient-gold">Summit</span>
-          </h1>
-          <p className="text-lg text-white/60 max-w-3xl mx-auto mb-6">
-            L’événement juridique de référence en Afrique de l’Ouest. Conférences, ateliers et networking d’exception.
-          </p>
-          <p className="text-white/40 mb-10">
-            Prochaine édition : <span className="text-gold-400">2027</span> – Inscrivez-vous sur liste d’attente pour être informé en avant-première.
-          </p>
+    <div className="min-h-screen bg-white py-20">
+      <div className="max-w-4xl mx-auto px-4 text-center">
+        <h1 className="text-4xl md:text-5xl font-bold text-[#0F172A]">
+          Benin Legal <span className="text-[#0A50C9]">Summit</span>
+        </h1>
+        <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
+          Le rendez-vous annuel des professionnels du droit en Afrique. Conférences, ateliers et networking d’exception.
+        </p>
 
-          {/* Formulaire d’attente */}
-          <WaitlistForm />
+        <div className="flex justify-center gap-8 mt-8 text-gray-500">
+          <div className="flex items-center gap-2">
+            <Calendar className="w-5 h-5 text-[#0A50C9]" />
+            <span>15-16 Décembre 2027</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <MapPin className="w-5 h-5 text-[#0A50C9]" />
+            <span>Palais des Congrès, Cotonou</span>
+          </div>
         </div>
-      </section>
 
-      {/* Galerie photos des éditions 2025 & 2026 */}
-      <GalleryEditions />
-
-      {/* Moments forts (texte) */}
-      <section className="py-20 max-w-7xl mx-auto px-6 lg:px-12">
-        <h2 className="text-3xl font-serif font-bold text-white mb-12 text-center">
-          Moments <span className="text-gradient-gold">phares</span>
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {editions.map((edition, index) => (
-            <div
-              key={index}
-              className="group relative bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:border-gold-500/20 transition-all duration-500 hover:shadow-[0_0_30px_-10px_rgba(229,172,47,0.15)]"
-            >
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-400/0 via-gold-400/60 to-gold-400/0 scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
-              <edition.icon className="w-8 h-8 text-gold-400 mb-4" />
-              <h3 className="text-xl font-serif font-semibold text-white mb-2">
-                {edition.title}
-              </h3>
-              <p className="text-white/50 text-sm leading-relaxed mb-4">
-                {edition.description}
-              </p>
-              <p className="text-xs text-gold-400/80">{edition.date}</p>
+        <div className="mt-12 max-w-md mx-auto">
+          {status === 'success' ? (
+            <div className="bg-[#E8F0FE] text-[#003399] p-6 rounded-xl text-center">
+              <CheckCircle className="w-10 h-10 mx-auto mb-2" />
+              <p className="font-semibold">Vous êtes sur la liste d’attente !</p>
+              <p className="text-sm mt-1">Vous serez informé dès l’ouverture des inscriptions.</p>
             </div>
-          ))}
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                placeholder="Votre email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="flex-1 px-4 py-2.5 border border-[#E2E8F0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0A50C9] text-[#0F172A]"
+              />
+              <button
+                type="submit"
+                disabled={status === 'loading'}
+                className="bg-[#0A50C9] text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-[#003399] transition-all flex items-center gap-2 disabled:opacity-50"
+              >
+                {status === 'loading' ? 'Envoi...' : 'Rejoindre'}
+                <Send className="w-4 h-4" />
+              </button>
+            </form>
+          )}
         </div>
-      </section>
-
-      {/* Partenaires officiels */}
-      <section className="py-16 max-w-7xl mx-auto px-6 lg:px-12">
-        <h2 className="text-3xl font-serif font-bold text-white mb-8 text-center">
-          Partenaires <span className="text-gradient-gold">officiels</span>
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center opacity-70">
-          <span className="text-white/50 text-lg font-semibold">FAGACE</span>
-          <span className="text-white/50 text-lg font-semibold">FeexPay</span>
-          <span className="text-white/50 text-lg font-semibold">Barreau du Bénin</span>
-          <span className="text-white/50 text-lg font-semibold">OHADA</span>
-        </div>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 }
