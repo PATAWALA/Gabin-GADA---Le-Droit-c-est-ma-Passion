@@ -5,8 +5,8 @@ import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const editions = [
-  { year: '2026', images: Array.from({ length: 6 }, (_, i) => `/images/ed2026${i + 1}.jpg`) },
-  { year: '2025', images: Array.from({ length: 6 }, (_, i) => `/images/ed2025${i + 1}.jpg`) },
+  { year: '2026', images: Array.from({ length: 4 }, (_, i) => `/images/ed2026${i + 1}.jpg`) },
+  { year: '2025', images: Array.from({ length: 4 }, (_, i) => `/images/ed2025${i + 1}.jpg`) },
 ];
 
 export default function GalleryEditions() {
