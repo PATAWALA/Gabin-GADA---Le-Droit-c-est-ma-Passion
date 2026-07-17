@@ -7,6 +7,7 @@ import { Scale, Menu, X, Briefcase, Search } from 'lucide-react';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false); // overlay recherche mobile
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
 
@@ -18,6 +19,7 @@ export default function Header() {
     } else {
       router.push('/cabinets');
     }
+    setSearchOpen(false);
     setMobileOpen(false);
   };
 
@@ -47,7 +49,7 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Zone droite : recherche + CTA */}
+          {/* Zone droite desktop : recherche + CTA */}
           <div className="hidden md:flex items-center gap-3">
             <form onSubmit={handleSearch} className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -68,20 +70,28 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Menu mobile toggle */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 text-[#0F172A] hover:text-[#0A50C9]"
-            aria-label="Menu"
-          >
-            {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Icônes mobile : recherche + menu */}
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              onClick={() => setSearchOpen(!searchOpen)}
+              className="p-2 text-[#0F172A] hover:text-[#0A50C9]"
+              aria-label="Rechercher"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="p-2 text-[#0F172A] hover:text-[#0A50C9]"
+              aria-label="Menu"
+            >
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
 
-        {/* Menu mobile */}
-        {mobileOpen && (
-          <div className="md:hidden pb-4 border-t border-[#E2E8F0] pt-3 space-y-3">
-            {/* Recherche mobile (pleine largeur) */}
+        {/* Overlay recherche mobile (pleine largeur, en dessous du header) */}
+        {searchOpen && (
+          <div className="md:hidden pb-3 border-t border-[#E2E8F0] pt-3">
             <form onSubmit={handleSearch} className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
@@ -90,9 +100,15 @@ export default function Header() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-3 py-2 text-sm border border-[#E2E8F0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0A50C9] text-[#0F172A]"
+                autoFocus
               />
             </form>
+          </div>
+        )}
 
+        {/* Menu mobile (hamburger) */}
+        {mobileOpen && (
+          <div className="md:hidden pb-4 border-t border-[#E2E8F0] pt-3 space-y-3">
             <Link href="/cabinets" className="block py-2 text-[#0F172A] hover:text-[#0A50C9] text-sm">
               Voir tous les cabinets
             </Link>
