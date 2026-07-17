@@ -7,7 +7,7 @@ import { Scale, Menu, X, Briefcase, Search } from 'lucide-react';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false); // overlay recherche mobile
+  const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
 
@@ -35,14 +35,14 @@ export default function Header() {
 
           {/* Navigation desktop (gauche) */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+            <Link href="/" className="text-[#0F172A] hover:text-[#0A50C9] transition-colors">
+              Accueil
+            </Link>
             <Link href="/cabinets" className="text-[#0F172A] hover:text-[#0A50C9] transition-colors">
               Voir tous les cabinets
             </Link>
             <Link href="/sommet" className="text-[#0F172A] hover:text-[#0A50C9] transition-colors">
               Le Sommet
-            </Link>
-            <Link href="/espace-cabinet" className="text-[#0F172A] hover:text-[#0A50C9] transition-colors">
-              Espace Cabinet
             </Link>
             <Link href="/a-propos" className="text-[#0F172A] hover:text-[#0A50C9] transition-colors">
               À propos
@@ -89,7 +89,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Overlay recherche mobile (pleine largeur, en dessous du header) */}
+        {/* Overlay recherche mobile */}
         {searchOpen && (
           <div className="md:hidden pb-3 border-t border-[#E2E8F0] pt-3">
             <form onSubmit={handleSearch} className="relative">
@@ -109,14 +109,14 @@ export default function Header() {
         {/* Menu mobile (hamburger) */}
         {mobileOpen && (
           <div className="md:hidden pb-4 border-t border-[#E2E8F0] pt-3 space-y-3">
+            <Link href="/" className="block py-2 text-[#0F172A] hover:text-[#0A50C9] text-sm">
+              Accueil
+            </Link>
             <Link href="/cabinets" className="block py-2 text-[#0F172A] hover:text-[#0A50C9] text-sm">
               Voir tous les cabinets
             </Link>
             <Link href="/sommet" className="block py-2 text-[#0F172A] hover:text-[#0A50C9] text-sm">
               Le Sommet
-            </Link>
-            <Link href="/espace-cabinet" className="block py-2 text-[#0F172A] hover:text-[#0A50C9] text-sm">
-              Espace Cabinet
             </Link>
             <Link href="/a-propos" className="block py-2 text-[#0F172A] hover:text-[#0A50C9] text-sm">
               À propos
