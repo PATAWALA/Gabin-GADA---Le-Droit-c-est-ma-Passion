@@ -31,26 +31,11 @@ export default function Header() {
             <span>DCMP Network</span>
           </Link>
 
-          {/* Navigation desktop + recherche */}
-          <nav className="hidden md:flex items-center gap-4 text-sm font-medium">
+          {/* Navigation desktop (gauche) */}
+          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link href="/cabinets" className="text-[#0F172A] hover:text-[#0A50C9] transition-colors">
               Voir tous les cabinets
             </Link>
-            <form onSubmit={handleSearch} className="flex items-center gap-1">
-              <div className="relative">
-                <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Rechercher un cabinet..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-44 pl-8 pr-2 py-1.5 text-xs border border-[#E2E8F0] rounded-md focus:outline-none focus:ring-1 focus:ring-[#0A50C9] focus:border-[#0A50C9] text-[#0F172A] placeholder-gray-400"
-                />
-              </div>
-              <button type="submit" className="bg-[#0A50C9] text-white p-1.5 rounded-md hover:bg-[#003399] transition-colors">
-                <Search className="w-4 h-4" />
-              </button>
-            </form>
             <Link href="/sommet" className="text-[#0F172A] hover:text-[#0A50C9] transition-colors">
               Le Sommet
             </Link>
@@ -62,11 +47,21 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Bouton desktop */}
-          <div className="hidden md:block">
+          {/* Zone droite : recherche + CTA */}
+          <div className="hidden md:flex items-center gap-3">
+            <form onSubmit={handleSearch} className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Rechercher un cabinet..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-48 pl-9 pr-3 py-2 text-sm border border-[#E2E8F0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0A50C9] focus:border-transparent text-[#0F172A] placeholder-gray-400"
+              />
+            </form>
             <Link
               href="/espace-cabinet"
-              className="inline-flex items-center gap-2 bg-[#0A50C9] hover:bg-[#003399] text-white font-semibold px-4 py-2 rounded-lg transition-all shadow-sm"
+              className="inline-flex items-center gap-2 bg-[#0A50C9] hover:bg-[#003399] text-white font-semibold px-4 py-2 rounded-lg transition-all shadow-sm whitespace-nowrap"
             >
               <Briefcase className="w-4 h-4" />
               Créer mon compte cabinet
@@ -86,21 +81,16 @@ export default function Header() {
         {/* Menu mobile */}
         {mobileOpen && (
           <div className="md:hidden pb-4 border-t border-[#E2E8F0] pt-3 space-y-3">
-            {/* Recherche mobile */}
-            <form onSubmit={handleSearch} className="flex items-center gap-2">
-              <div className="relative flex-1">
-                <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Rechercher un cabinet..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-8 pr-2 py-2 text-sm border border-[#E2E8F0] rounded-md focus:outline-none focus:ring-1 focus:ring-[#0A50C9] text-[#0F172A]"
-                />
-              </div>
-              <button type="submit" className="bg-[#0A50C9] text-white p-2 rounded-md hover:bg-[#003399]">
-                <Search className="w-4 h-4" />
-              </button>
+            {/* Recherche mobile (pleine largeur) */}
+            <form onSubmit={handleSearch} className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Rechercher un cabinet..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-9 pr-3 py-2 text-sm border border-[#E2E8F0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0A50C9] text-[#0F172A]"
+              />
             </form>
 
             <Link href="/cabinets" className="block py-2 text-[#0F172A] hover:text-[#0A50C9] text-sm">
