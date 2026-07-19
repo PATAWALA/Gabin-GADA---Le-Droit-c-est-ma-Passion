@@ -10,6 +10,7 @@
   --color-border-light: #E2E8F0;
   --color-bg-light: #F8FAFC;
   --color-bg-white: #FFFFFF;
+  --color-gold-cta: #EAB308;   /* Jaune/Or pour les CTA */
 
   --font-sans: 'Inter', system-ui, sans-serif;
 }
