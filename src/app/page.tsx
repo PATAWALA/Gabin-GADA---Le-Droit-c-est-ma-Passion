@@ -1,7 +1,9 @@
 import HeroSection from '@/components/sections/HeroSection';
 import CabinetsGrid from '@/components/sections/CabinetsGrid';
+import LibrarySection from '@/components/sections/LibrarySection';
 import EventWidget from '@/components/EventWidget';
-import GalleryEditions from '@/components/sections/GalleryEditions';
+import AcademySection from '@/components/sections/AcademySection';
+import CTASection from '@/components/sections/CTASection';
 
 export default function Home() {
   return (
@@ -9,7 +11,9 @@ export default function Home() {
       <EventWidget />
       <HeroSection />
       <CabinetsGrid />
-      <GalleryEditions />
+      <LibrarySection />
+      <AcademySection />
+      <CTASection />
     </>
   );
 }
